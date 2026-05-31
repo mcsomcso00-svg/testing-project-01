@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traze — Crystal Clear Trading</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --c-bg:        #07090F;
+  --c-bg2:       #0B0F1A;
+  --c-surface:   #111827;
+  --c-surface2:  #161F30;
+  --c-border:    rgba(255,255,255,0.07);
+  --c-border-hi: rgba(0,201,177,0.28);
+  --c-cyan:      #00C9B1;
+  --c-cyan-dim:  rgba(0,201,177,0.12);
+  --c-blue:      #1E6BFF;
+  --c-blue-dim:  rgba(30,107,255,0.12);
+  --c-gold:      #F5A623;
+  --c-gold-dim:  rgba(245,166,35,0.10);
+  --c-red:       #EF4444;
+  --c-green:     #00C9B1;
+  --c-text:      #F1F5F9;
+  --c-text2:     #94A3B8;
+  --c-text3:     #475569;
+  --grad-brand:  linear-gradient(135deg,#00C9B1 0%,#1E6BFF 100%);
+  --grad-hero:   radial-gradient(ellipse 100% 80% at 70% 40%, rgba(0,201,177,.10) 0%, transparent 60%),
+                 radial-gradient(ellipse 60% 60% at 20% 80%, rgba(30,107,255,.08) 0%, transparent 50%),
+                 #07090F;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --shadow-glow: 0 0 40px rgba(0,201,177,.15), 0 8px 32px rgba(0,0,0,.6);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;background:var(--c-bg);color:var(--c-text);overflow-x:hidden;line-height:1.6}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+/* ═══════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════ */
+.container{max-width:1160px;margin:0 auto;padding:0 24px}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--c-cyan);margin-bottom:14px}
+.heading-xl{font-size:clamp(36px,5.5vw,68px);font-weight:900;letter-spacing:-2px;line-height:1.05}
+.heading-lg{font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-1.2px;line-height:1.1}
+.heading-md{font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-.8px;line-height:1.2}
+.grad-text{background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.text-muted{color:var(--c-text2)}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:600;background:var(--c-cyan-dim);border:1px solid var(--c-border-hi);color:var(--c-cyan)}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:var(--c-cyan);animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:var(--r-sm);font-weight:700;font-size:14px;transition:all .2s;cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--grad-brand);color:#fff;padding:13px 28px;box-shadow:0 4px 20px rgba(0,201,177,.25)}
+.btn-primary:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,201,177,.35)}
+.btn-ghost{background:transparent;border:1px solid var(--c-border);color:var(--c-text2);padding:12px 22px}
+.btn-ghost:hover{border-color:var(--c-border-hi);color:var(--c-text)}
+.btn-lg{padding:16px 36px;font-size:16px;border-radius:var(--r-md)}
+.btn-sm{padding:9px 18px;font-size:13px}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.up{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* ═══════════════════════════════════════════
+   RISK RIBBON
+═══════════════════════════════════════════ */
+.risk-ribbon{background:#0C1118;border-bottom:1px solid var(--c-border);padding:8px 24px;text-align:center;font-size:12px;color:var(--c-text3);letter-spacing:.2px}
+.risk-ribbon a{color:var(--c-cyan);border-bottom:1px solid transparent;transition:border-color .2s}
+.risk-ribbon a:hover{border-color:var(--c-cyan)}
+
+/* ═══════════════════════════════════════════
+   TICKER
+═══════════════════════════════════════════ */
+.ticker-wrap{background:#070B14;border-bottom:1px solid var(--c-border);overflow:hidden;position:relative;padding:9px 0}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:72px;z-index:2;pointer-events:none}
+.ticker-wrap::before{left:0;background:linear-gradient(to right,#070B14,transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(to left,#070B14,transparent)}
+.ticker-rail{display:flex;gap:40px;width:max-content;animation:slide 32s linear infinite}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.t-item{display:flex;align-items:center;gap:9px;white-space:nowrap;font-size:12.5px;font-weight:500}
+.t-sym{color:var(--c-text2);font-weight:700;letter-spacing:.4px;font-size:12px}
+.t-val{color:var(--c-text);font-weight:600}
+.t-chg{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.up{background:rgba(0,201,177,.14);color:var(--c-cyan)}
+.dn{background:rgba(239,68,68,.14);color:var(--c-red)}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+.nav{position:sticky;top:0;z-index:200;height:66px;display:flex;align-items:center;background:rgba(7,9,15,.88);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--c-border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1160px;margin:0 auto;padding:0 24px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-icon{width:34px;height:34px;border-radius:9px;background:var(--grad-brand);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-logo-icon svg{width:18px;height:18px}
+.nav-logo-text{font-size:20px;font-weight:800;letter-spacing:-.5px}
+.nav-logo-text span{color:var(--c-cyan)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13.5px;font-weight:500;color:var(--c-text2);transition:color .2s}
+.nav-links a:hover{color:var(--c-text)}
+.nav-right{display:flex;align-items:center;gap:10px}
+/* Mobile menu toggle */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;cursor:pointer}
+.hamburger span{width:22px;height:2px;background:var(--c-text2);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+/* Mobile nav drawer */
+.mobile-nav{display:none;flex-direction:column;gap:0;background:#0B0F1A;border-bottom:1px solid var(--c-border);overflow:hidden;max-height:0;transition:max-height .35s ease}
+.mobile-nav.open{max-height:400px}
+.mobile-nav a{display:block;padding:14px 24px;font-size:15px;font-weight:500;color:var(--c-text2);border-bottom:1px solid var(--c-border);transition:color .2s,background .2s}
+.mobile-nav a:hover{color:var(--c-text);background:var(--c-surface)}
+.mobile-nav .mn-cta{padding:16px 24px;display:flex;gap:10px;border-bottom:none}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+/* Animated BG */
+.hero-bg{position:absolute;inset:0;background:var(--grad-hero)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.023) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.023) 1px,transparent 1px);background-size:64px 64px;animation:gridDrift 24s linear infinite;pointer-events:none}
+@keyframes gridDrift{from{background-position:0 0}to{background-position:64px 64px}}
+.hero-glow-1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,201,177,.09) 0%,transparent 70%);right:-150px;top:-150px;animation:float1 8s ease-in-out infinite;pointer-events:none}
+.hero-glow-2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(30,107,255,.10) 0%,transparent 70%);left:-80px;bottom:0;animation:float2 10s ease-in-out infinite;pointer-events:none}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-20px,-30px) scale(1.06)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-20px)}}
+/* Slide system */
+.hero-slides{position:absolute;inset:0}
+.h-slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease}
+.h-slide.on{opacity:1}
+.hero-inner{position:relative;z-index:10;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:80px 0}
+.hero-copy{}
+.hero-copy .pill{margin-bottom:22px}
+.hero-h1{margin-bottom:18px}
+.hero-lead{font-size:17px;color:var(--c-text2);line-height:1.75;max-width:480px;margin-bottom:32px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
+.hero-trust{display:flex;gap:28px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--c-text2)}
+.trust-item svg{flex-shrink:0;color:var(--c-cyan)}
+/* Slide dots */
+.hero-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:20}
+.h-dot{width:8px;height:8px;border-radius:50%;background:var(--c-text3);cursor:pointer;transition:all .3s;border:none}
+.h-dot.on{width:26px;border-radius:4px;background:var(--c-cyan)}
+
+/* ═══════════════════════════════════════════
+   APP MOCKUP (SVG-based phone)
+═══════════════════════════════════════════ */
+.mockup-wrap{display:flex;justify-content:center;align-items:center;position:relative}
+.phone-outer{
+  width:300px;
+  filter:drop-shadow(0 32px 80px rgba(0,0,0,.8)) drop-shadow(0 0 40px rgba(0,201,177,.12));
+  animation:phoneBob 5s ease-in-out infinite;
+  flex-shrink:0;
+  position:relative;
+  z-index:2;
+}
+@keyframes phoneBob{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-14px) rotate(.5deg)}}
+
+/* Floating cards around phone */
+.float-cards{position:absolute;inset:0;pointer-events:none;z-index:3}
+.fc{
+  position:absolute;
+  background:rgba(17,24,39,.92);
+  border:1px solid var(--c-border-hi);
+  border-radius:12px;
+  padding:10px 14px;
+  backdrop-filter:blur(12px);
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+  white-space:nowrap;
+  animation:fcFloat 4s ease-in-out infinite;
+}
+.fc-1{top:12%;left:-64px;animation-delay:0s}
+.fc-2{top:42%;right:-60px;animation-delay:1.5s}
+.fc-3{bottom:14%;left:-48px;animation-delay:3s}
+@keyframes fcFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.fc-label{font-size:10px;color:var(--c-text2);font-weight:500;margin-bottom:2px;text-transform:uppercase;letter-spacing:.6px}
+.fc-value{font-size:15px;font-weight:800;letter-spacing:-.3px}
+.fc-value.green{color:var(--c-cyan)}
+.fc-value.gold{color:var(--c-gold)}
+.fc-sub{font-size:10px;color:var(--c-text3);margin-top:1px}
+
+/* ═══════════════════════════════════════════
+   STATS STRIP
+═══════════════════════════════════════════ */
+.stats-strip{background:var(--c-surface);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);padding:0}
+.stats-strip-inner{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-cell{padding:28px 24px;text-align:center;border-right:1px solid var(--c-border);transition:background .25s}
+.stat-cell:last-child{border-right:none}
+.stat-cell:hover{background:var(--c-surface2)}
+.stat-num{font-size:clamp(24px,3vw,38px);font-weight:900;letter-spacing:-1.2px;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-lbl{font-size:12.5px;color:var(--c-text2);margin-top:4px;font-weight:500}
+
+/* ═══════════════════════════════════════════
+   SECTION COMMON
+═══════════════════════════════════════════ */
+.section{padding:96px 0}
+.section-head{margin-bottom:56px}
+.section-head.center{text-align:center}
+.section-head.center .section-desc{margin:12px auto 0;max-width:540px}
+.section-desc{font-size:16.5px;color:var(--c-text2);line-height:1.75;margin-top:12px;max-width:520px}
+
+/* ═══════════════════════════════════════════
+   PLATFORMS (App showcase)
+═══════════════════════════════════════════ */
+.platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pf-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-xl);padding:32px;display:flex;flex-direction:column;gap:16px;transition:border-color .3s,transform .3s,background .3s;position:relative;overflow:hidden}
+.pf-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad-brand);opacity:0;transition:opacity .3s}
+.pf-card:hover{border-color:var(--c-border-hi);transform:translateY(-5px);background:var(--c-surface2)}
+.pf-card:hover::before{opacity:1}
+.pf-card.featured{grid-column:span 2;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center}
+.pf-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.pf-name{font-size:18px;font-weight:800;margin-bottom:4px}
+.pf-desc{font-size:14px;color:var(--c-text2);line-height:1.65}
+.pf-badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.pf-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;background:var(--c-surface2);border:1px solid var(--c-border);color:var(--c-text2)}
+/* Mini platform phone preview */
+.pf-phone{width:120px;flex-shrink:0}
+
+/* ═══════════════════════════════════════════
+   MARKETS TABLE
+═══════════════════════════════════════════ */
+.markets-section{background:var(--c-bg2);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border)}
+.market-tabs{display:flex;gap:0;border:1px solid var(--c-border);border-radius:var(--r-sm);overflow:hidden;width:fit-content;margin-bottom:28px}
+.mtab{background:none;border:none;color:var(--c-text2);padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border-right:1px solid var(--c-border)}
+.mtab:last-child{border-right:none}
+.mtab.on{background:var(--grad-brand);color:#fff}
+.mkt-table{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden}
+.mkt-row{display:grid;grid-template-columns:2.2fr 1.4fr 1.2fr 1fr 1.2fr;padding:14px 22px;align-items:center;border-bottom:1px solid var(--c-border);transition:background .2s;cursor:default}
+.mkt-row:last-child{border-bottom:none}
+.mkt-row.hdr{font-size:11px;color:var(--c-text3);font-weight:700;text-transform:uppercase;letter-spacing:.6px;background:rgba(255,255,255,.02);cursor:default}
+.mkt-row:not(.hdr):hover{background:var(--c-surface2)}
+.mkt-name{display:flex;align-items:center;gap:12px}
+.mkt-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+.mkt-sym{font-size:14px;font-weight:700}
+.mkt-full{font-size:12px;color:var(--c-text3);margin-top:1px}
+.mkt-price{font-size:14px;font-weight:600}
+.mkt-spread{font-size:13px;color:var(--c-text2)}
+.mkt-chg{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700}
+.spark{height:32px;width:80px}
+
+/* ═══════════════════════════════════════════
+   FEATURES BENTO
+═══════════════════════════════════════════ */
+.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:16px}
+.bento-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-xl);padding:28px 26px;transition:border-color .3s,transform .3s}
+.bento-card:hover{border-color:var(--c-border-hi);transform:translateY(-4px)}
+.bento-card.wide{grid-column:span 2}
+.bento-card.tall{grid-row:span 2}
+.bento-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:20px}
+.bento-card h3{font-size:17px;font-weight:800;margin-bottom:8px}
+.bento-card p{font-size:14px;color:var(--c-text2);line-height:1.7}
+/* Mini bar chart inside bento */
+.mini-bars{display:flex;align-items:flex-end;gap:4px;height:48px;margin-top:16px}
+.bar{border-radius:3px 3px 0 0;flex:1;background:var(--grad-brand);opacity:.7}
+
+/* ═══════════════════════════════════════════
+   ACCOUNTS
+═══════════════════════════════════════════ */
+.accs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.acc-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-xl);padding:28px;display:flex;flex-direction:column;gap:16px;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
+.acc-card.featured{border-color:var(--c-border-hi);background:linear-gradient(160deg,var(--c-surface2),var(--c-surface))}
+.acc-card.featured::before{content:'Most Popular';position:absolute;top:18px;right:18px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--c-cyan);background:var(--c-cyan-dim);border:1px solid var(--c-border-hi);padding:3px 10px;border-radius:100px}
+.acc-card:hover{border-color:var(--c-border-hi);transform:translateY(-5px)}
+.acc-type{font-size:20px;font-weight:900;letter-spacing:-.5px}
+.acc-sub{font-size:13px;color:var(--c-text2)}
+.acc-sep{height:1px;background:var(--c-border)}
+.acc-feats{display:flex;flex-direction:column;gap:10px}
+.acc-feat{display:flex;align-items:center;gap:9px;font-size:13.5px}
+.acc-feat-ico{color:var(--c-cyan);font-size:14px;flex-shrink:0}
+
+/* ═══════════════════════════════════════════
+   REGISTRATION
+═══════════════════════════════════════════ */
+.reg-section{padding:96px 0}
+.reg-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.reg-left .heading-lg{margin-bottom:14px}
+.reg-steps{display:flex;flex-direction:column;gap:28px;margin-top:36px}
+.rstep{display:flex;align-items:flex-start;gap:18px}
+.rstep-num{width:38px;height:38px;flex-shrink:0;border-radius:50%;background:var(--grad-brand);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;margin-top:2px}
+.rstep-body h4{font-size:15.5px;font-weight:700;margin-bottom:5px}
+.rstep-body p{font-size:14px;color:var(--c-text2);line-height:1.65}
+/* Form card */
+.form-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-xl);padding:38px;position:relative;overflow:hidden}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad-brand)}
+.form-card-title{font-size:21px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px}
+.form-card-sub{font-size:13.5px;color:var(--c-text2);margin-bottom:28px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:700;color:var(--c-text2);margin-bottom:7px;letter-spacing:.3px;text-transform:uppercase}
+.fg input,.fg select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--c-border);border-radius:var(--r-sm);padding:12px 15px;color:var(--c-text);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s,background .2s;-webkit-appearance:none}
+.fg input::placeholder{color:var(--c-text3)}
+.fg input:focus,.fg select:focus{border-color:var(--c-cyan);background:rgba(0,201,177,.05)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tos{display:flex;align-items:flex-start;gap:10px;margin:18px 0;cursor:pointer}
+.tos input{margin-top:3px;accent-color:var(--c-cyan);flex-shrink:0}
+.tos span{font-size:13px;color:var(--c-text2);line-height:1.55}
+.tos a{color:var(--c-cyan)}
+.form-submit{width:100%;background:var(--grad-brand);border:none;border-radius:var(--r-sm);padding:15px;color:#fff;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;transition:opacity .2s,transform .15s;letter-spacing:.2px}
+.form-submit:hover{opacity:.88;transform:translateY(-1px)}
+.form-lock{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:14px;font-size:12px;color:var(--c-text3)}
+/* Success */
+.form-success{display:none;text-align:center;padding:24px 0}
+.success-circle{width:68px;height:68px;border-radius:50%;background:var(--c-cyan-dim);border:2px solid var(--c-cyan);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:30px}
+.form-success h3{font-size:22px;font-weight:800;margin-bottom:8px}
+.form-success p{font-size:15px;color:var(--c-text2);margin-bottom:24px}
+
+/* ═══════════════════════════════════════════
+   TRUST LOGOS STRIP
+═══════════════════════════════════════════ */
+.trust-strip{background:var(--c-bg2);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);padding:32px 0}
+.trust-strip-inner{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.trust-logo{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--c-text3)}
+.trust-logo svg{color:var(--c-text3)}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.footer{background:#050709;border-top:1px solid var(--c-border);padding:64px 0 28px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand p{font-size:13.5px;color:var(--c-text2);line-height:1.8;margin-top:16px;max-width:280px}
+.footer-col h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--c-text3);margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.footer-col ul a{font-size:13.5px;color:var(--c-text2);transition:color .2s}
+.footer-col ul a:hover{color:var(--c-text)}
+.footer-bottom{border-top:1px solid var(--c-border);padding-top:24px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.footer-disc{font-size:11.5px;color:var(--c-text3);line-height:1.75;max-width:680px}
+.footer-copy{font-size:12px;color:var(--c-text3);white-space:nowrap;padding-top:2px}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;gap:48px;padding:60px 0 100px}
+  .phone-outer{width:240px}
+  .fc-1{left:-30px}.fc-2{right:-30px}.fc-3{left:-20px}
+  .mockup-wrap{margin-top:0}
+  .platform-grid{grid-template-columns:1fr}
+  .pf-card.featured{grid-column:span 1;grid-template-columns:1fr;gap:16px}
+  .pf-phone{display:none}
+  .bento{grid-template-columns:1fr 1fr}
+  .bento-card.wide{grid-column:span 2}
+  .bento-card.tall{grid-row:auto}
+  .accs-grid{grid-template-columns:1fr}
+  .reg-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
+  .mkt-row{grid-template-columns:2fr 1.2fr 1fr 1fr}
+  .mkt-spread,.spark{display:none}
+}
+@media(max-width:768px){
+  .nav-links,.nav-right .btn-ghost{display:none}
+  .hamburger{display:flex}
+  .mobile-nav{display:flex}
+  .section{padding:64px 0}
+  .reg-section{padding:64px 0}
+  .hero-inner{padding:40px 0 90px}
+  .hero-lead{font-size:16px}
+  .stats-strip-inner{grid-template-columns:repeat(2,1fr)}
+  .stat-cell:nth-child(2){border-right:none}
+  .stat-cell:nth-child(3){border-top:1px solid var(--c-border);border-right:1px solid var(--c-border)}
+  .stat-cell:nth-child(4){border-top:1px solid var(--c-border);border-right:none}
+  .bento{grid-template-columns:1fr}
+  .bento-card.wide{grid-column:span 1}
+  .fg-row{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr;gap:32px}
+  .footer-bottom{flex-direction:column}
+  .trust-strip-inner{gap:24px}
+  .phone-outer{width:200px}
+  .fc-1,.fc-2,.fc-3{display:none}
+  .mkt-row{grid-template-columns:2fr 1.2fr 1fr}
+  .mkt-chg{display:none}
+}
+@media(max-width:480px){
+  .hero-btns{flex-direction:column}
+  .btn-lg{width:100%;justify-content:center}
+  .hero-trust{flex-direction:column;gap:12px}
+  .market-tabs{flex-wrap:wrap;border-radius:var(--r-sm)}
+  .platform-grid{grid-template-columns:1fr}
+  .stats-strip-inner{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- RISK RIBBON -->
+<div class="risk-ribbon">
+  CFDs are high-risk products. Trade only if you fully understand the risks.&nbsp;<a href="#">Read Risk Disclosure →</a>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-rail" id="tickerRail"></div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polyline points="2,14 7,9 11,13 18,5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="nav-logo-text">Tra<span>ze</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#trading">Trading</a></li>
+      <li><a href="#platforms">Platforms</a></li>
+      <li><a href="#accounts">Accounts</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#register" class="btn btn-ghost btn-sm">Log In</a>
+      <a href="#register" class="btn btn-primary btn-sm">Open Account</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#trading">Trading</a>
+  <a href="#platforms">Platforms</a>
+  <a href="#accounts">Accounts</a>
+  <a href="#about">About</a>
+  <div class="mn-cta">
+    <a href="#register" class="btn btn-ghost btn-sm" style="flex:1;justify-content:center">Log In</a>
+    <a href="#register" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Open Account</a>
+  </div>
+</div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-slides">
+    <div class="h-slide on" data-idx="0"></div>
+    <div class="h-slide" data-idx="1"></div>
+    <div class="h-slide" data-idx="2"></div>
+  </div>
+
+  <div class="container">
+    <div class="hero-inner">
+
+      <!-- Copy -->
+      <div class="hero-copy reveal">
+        <div class="pill"><div class="pill-dot"></div><span id="pill-txt">FSA Regulated Broker</span></div>
+        <h1 class="heading-xl hero-h1" id="hero-h1">Crystal Clear<br><span class="grad-text" id="hero-grad">Trading.</span></h1>
+        <p class="hero-lead" id="hero-lead">Trade Forex, CFDs, Crypto & more on MT4/MT5. Leverage up to 1:2000 with &lt;1ms execution and 24/5 live support worldwide.</p>
+        <div class="hero-btns">
+          <a href="#register" class="btn btn-primary btn-lg">Start Trading Free →</a>
+          <a href="#platforms" class="btn btn-ghost btn-lg">View Platforms</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M7 0L8.8 5H14L9.9 8.1L11.5 13L7 10L2.5 13L4.1 8.1L0 5H5.2L7 0z"/></svg>
+            No Commission
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M7 0L8.8 5H14L9.9 8.1L11.5 13L7 10L2.5 13L4.1 8.1L0 5H5.2L7 0z"/></svg>
+            From 0.8 pips
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M7 0L8.8 5H14L9.9 8.1L11.5 13L7 10L2.5 13L4.1 8.1L0 5H5.2L7 0z"/></svg>
+            120+ Instruments
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone mockup -->
+      <div class="mockup-wrap reveal reveal-delay-2">
+        <div class="float-cards">
+          <div class="fc fc-1">
+            <div class="fc-label">EUR / USD</div>
+            <div class="fc-value green" id="fc-price">1.1605</div>
+            <div class="fc-sub">▲ +0.03% today</div>
+          </div>
+          <div class="fc fc-2">
+            <div class="fc-label">Portfolio P&amp;L</div>
+            <div class="fc-value gold">+$4,218</div>
+            <div class="fc-sub">This month</div>
+          </div>
+          <div class="fc fc-3">
+            <div class="fc-label">Execution</div>
+            <div class="fc-value green">&lt;1ms</div>
+            <div class="fc-sub">Ultra-fast fill</div>
+          </div>
+        </div>
+
+        <!-- Detailed SVG phone mockup -->
+        <div class="phone-outer">
+          <svg viewBox="0 0 320 640" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+            <defs>
+              <linearGradient id="phoneFrame" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1E2A3A"/>
+                <stop offset="100%" stop-color="#0F1728"/>
+              </linearGradient>
+              <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#0B1120"/>
+                <stop offset="100%" stop-color="#070D1A"/>
+              </linearGradient>
+              <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00C9B1"/>
+                <stop offset="100%" stop-color="#1E6BFF"/>
+              </linearGradient>
+              <linearGradient id="chartFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#00C9B1" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#00C9B1" stop-opacity="0.0"/>
+              </linearGradient>
+              <linearGradient id="redFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#EF4444" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#EF4444" stop-opacity="0.0"/>
+              </linearGradient>
+              <clipPath id="screenClip">
+                <rect x="14" y="14" width="292" height="612" rx="32"/>
+              </clipPath>
+              <filter id="innerGlow">
+                <feGaussianBlur stdDeviation="6" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+
+            <!-- Phone body -->
+            <rect x="4" y="4" width="312" height="632" rx="44" fill="url(#phoneFrame)" stroke="#2A3A50" stroke-width="1.5"/>
+            <!-- Screen -->
+            <rect x="14" y="14" width="292" height="612" rx="32" fill="url(#screenGrad)"/>
+
+            <!-- Status bar -->
+            <g clip-path="url(#screenClip)">
+              <!-- Notch -->
+              <rect x="116" y="18" width="88" height="20" rx="10" fill="#0B1120"/>
+
+              <!-- Status icons -->
+              <text x="28" y="35" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#94A3B8">9:41</text>
+              <!-- Signal bars -->
+              <rect x="254" y="28" width="3" height="7" rx="1" fill="#94A3B8"/>
+              <rect x="259" y="25" width="3" height="10" rx="1" fill="#94A3B8"/>
+              <rect x="264" y="22" width="3" height="13" rx="1" fill="#94A3B8"/>
+              <!-- Battery -->
+              <rect x="272" y="26" width="16" height="9" rx="2" stroke="#94A3B8" stroke-width="1.2" fill="none"/>
+              <rect x="274" y="28" width="10" height="5" rx="1" fill="#94A3B8"/>
+              <rect x="288" y="29" width="2" height="3" rx="1" fill="#94A3B8"/>
+
+              <!-- Traze logo bar -->
+              <rect x="14" y="48" width="292" height="1" fill="#1A2540"/>
+              <text x="28" y="66" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="white">Tra</text>
+              <text x="52" y="66" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="#00C9B1">ze</text>
+              <!-- Notification bell -->
+              <circle cx="276" cy="60" r="12" fill="#111827"/>
+              <text x="271" y="65" font-size="12" fill="#94A3B8">🔔</text>
+              <!-- Avatar -->
+              <circle cx="298" cy="60" r="10" fill="url(#accentGrad)"/>
+              <text x="293" y="64" font-size="10" font-weight="700" fill="white">JD</text>
+
+              <!-- Portfolio card -->
+              <rect x="20" y="80" width="280" height="96" rx="16" fill="#111827"/>
+              <rect x="20" y="80" width="280" height="3" rx="2" fill="url(#accentGrad)"/>
+              <text x="36" y="103" font-family="Inter,sans-serif" font-size="10" fill="#64748B" font-weight="600">PORTFOLIO VALUE</text>
+              <text x="36" y="124" font-family="Inter,sans-serif" font-size="26" font-weight="900" fill="white">$24,831</text>
+              <text x="36" y="142" font-family="Inter,sans-serif" font-size="11" fill="#00C9B1" font-weight="700">▲ +$1,204 (5.1%) this week</text>
+              <!-- Tiny sparkline inside card -->
+              <polyline points="180,148 196,138 208,141 220,132 232,128 248,120 262,124 278,112" stroke="#00C9B1" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <polygon points="180,148 196,138 208,141 220,132 232,128 248,120 262,124 278,112 278,152 180,152" fill="url(#chartFill)"/>
+
+              <!-- Section label -->
+              <text x="28" y="200" font-family="Inter,sans-serif" font-size="12" font-weight="800" fill="white">Open Positions</text>
+
+              <!-- Position row 1 -->
+              <rect x="20" y="208" width="280" height="54" rx="12" fill="#111827"/>
+              <circle cx="44" cy="235" r="14" fill="#1D4ED820"/>
+              <text x="39" y="240" font-family="monospace" font-size="10" font-weight="700" fill="#60A5FA">EUR</text>
+              <text x="64" y="230" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="white">EUR/USD</text>
+              <text x="64" y="245" font-family="Inter,sans-serif" font-size="10" fill="#475569">Buy · 0.5 lots</text>
+              <text x="230" y="230" font-family="Inter,sans-serif" font-size="12" font-weight="800" fill="#00C9B1">+$318.42</text>
+              <text x="230" y="245" font-family="Inter,sans-serif" font-size="10" fill="#64748B">1.1605</text>
+
+              <!-- Position row 2 -->
+              <rect x="20" y="268" width="280" height="54" rx="12" fill="#111827"/>
+              <circle cx="44" cy="295" r="14" fill="#F7931A20"/>
+              <text x="40" y="300" font-family="monospace" font-size="10" font-weight="700" fill="#F7931A">BTC</text>
+              <text x="64" y="290" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="white">BTC/USD</text>
+              <text x="64" y="305" font-family="Inter,sans-serif" font-size="10" fill="#475569">Sell · 0.02 lots</text>
+              <text x="230" y="290" font-family="Inter,sans-serif" font-size="12" font-weight="800" fill="#EF4444">-$84.10</text>
+              <text x="230" y="305" font-family="Inter,sans-serif" font-size="10" fill="#64748B">73,795</text>
+
+              <!-- Chart section -->
+              <text x="28" y="348" font-family="Inter,sans-serif" font-size="12" font-weight="800" fill="white">XAU/USD</text>
+              <text x="192" y="348" font-family="Inter,sans-serif" font-size="10" fill="#00C9B1" font-weight="700">1D · ▲ +1.34%</text>
+
+              <!-- Chart -->
+              <rect x="20" y="356" width="280" height="110" rx="12" fill="#0D1525"/>
+              <!-- Chart lines -->
+              <line x1="20" y1="396" x2="300" y2="396" stroke="#1A2540" stroke-width="1"/>
+              <line x1="20" y1="426" x2="300" y2="426" stroke="#1A2540" stroke-width="1"/>
+              <!-- Price line -->
+              <polyline points="30,440 52,432 68,436 82,425 98,418 116,410 134,404 148,408 162,398 178,388 196,380 212,374 228,365 248,358 268,362 288,350" stroke="#00C9B1" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <polygon points="30,440 52,432 68,436 82,425 98,418 116,410 134,404 148,408 162,398 178,388 196,380 212,374 228,365 248,358 268,362 288,350 288,460 30,460" fill="url(#chartFill)"/>
+              <!-- Price label -->
+              <rect x="242" y="344" width="52" height="16" rx="4" fill="#00C9B1"/>
+              <text x="248" y="356" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#07090F">$4,565</text>
+
+              <!-- Bottom nav bar -->
+              <rect x="14" y="574" width="292" height="52" rx="0" fill="#0A1020"/>
+              <rect x="14" y="574" width="292" height="1" fill="#1A2540"/>
+              <!-- Nav icons -->
+              <text x="37" y="606" font-size="18" text-anchor="middle">📊</text>
+              <text x="100" y="606" font-size="18" text-anchor="middle">💹</text>
+              <!-- Trade button center -->
+              <circle cx="160" cy="598" r="22" fill="url(#accentGrad)"/>
+              <text x="160" y="603" font-size="16" text-anchor="middle">⚡</text>
+              <text x="220" y="606" font-size="18" text-anchor="middle">📰</text>
+              <text x="280" y="606" font-size="18" text-anchor="middle">👤</text>
+
+              <!-- Home indicator -->
+              <rect x="126" y="624" width="68" height="4" rx="2" fill="#2A3A50"/>
+            </g>
+
+            <!-- Phone side buttons -->
+            <rect x="0" y="140" width="4" height="40" rx="2" fill="#1E2A3A"/>
+            <rect x="0" y="200" width="4" height="60" rx="2" fill="#1E2A3A"/>
+            <rect x="316" y="170" width="4" height="70" rx="2" fill="#1E2A3A"/>
+          </svg>
+        </div>
+      </div>
+
+    </div><!-- hero-inner -->
+  </div>
+
+  <!-- Slide dots -->
+  <div class="hero-dots">
+    <button class="h-dot on" onclick="goSlide(0)"></button>
+    <button class="h-dot" onclick="goSlide(1)"></button>
+    <button class="h-dot" onclick="goSlide(2)"></button>
+  </div>
+</section>
+
+<!-- ══════════════════ STATS ══════════════════ -->
+<div class="stats-strip">
+  <div class="stats-strip-inner">
+    <div class="stat-cell reveal"><div class="stat-num">$2.4B+</div><div class="stat-lbl">Monthly Volume</div></div>
+    <div class="stat-cell reveal reveal-delay-1"><div class="stat-num">120+</div><div class="stat-lbl">Instruments</div></div>
+    <div class="stat-cell reveal reveal-delay-2"><div class="stat-num">1:2000</div><div class="stat-lbl">Max Leverage</div></div>
+    <div class="stat-cell reveal reveal-delay-3"><div class="stat-num">24/5</div><div class="stat-lbl">Live Support</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════ PLATFORMS ══════════════════ -->
+<section class="section" id="platforms">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">Platforms</div>
+      <h2 class="heading-lg">Trade anywhere,<br>on any device</h2>
+      <p class="section-desc">Award-winning platforms engineered for speed, reliability, and professional-grade analytics.</p>
+    </div>
+
+    <div class="platform-grid">
+      <!-- Featured card -->
+      <div class="pf-card featured reveal">
+        <div>
+          <div class="pf-icon-wrap" style="background:rgba(0,201,177,.12)">📱</div>
+          <div class="pf-name" style="margin-top:14px">Traze Mobile App</div>
+          <p class="pf-desc" style="max-width:420px">Your full trading desk in your pocket. Real-time charts, one-tap order execution, push alerts, and complete portfolio management — iOS &amp; Android.</p>
+          <div class="pf-badge-row" style="margin-top:14px">
+            <span class="pf-badge">iOS</span>
+            <span class="pf-badge">Android</span>
+            <span class="pf-badge">Copy Trading</span>
+            <span class="pf-badge">Push Alerts</span>
+            <span class="pf-badge">Face ID</span>
+          </div>
+          <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap">
+            <a href="#register" class="btn btn-primary btn-sm">Download App</a>
+            <a href="#register" class="btn btn-ghost btn-sm">Learn More</a>
+          </div>
+        </div>
+        <div class="pf-phone">
+          <svg viewBox="0 0 120 240" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="116" height="236" rx="18" fill="#111827" stroke="#1E2A3A" stroke-width="1.5"/>
+            <rect x="8" y="8" width="104" height="224" rx="12" fill="#070D1A"/>
+            <rect x="44" y="10" width="32" height="6" rx="3" fill="#0B1120"/>
+            <rect x="8" y="24" width="104" height="1" fill="#1A2540"/>
+            <text x="16" y="42" font-family="Inter" font-size="8" font-weight="700" fill="white">Tra</text>
+            <text x="32" y="42" font-family="Inter" font-size="8" font-weight="700" fill="#00C9B1">ze</text>
+            <rect x="16" y="50" width="88" height="36" rx="8" fill="#111827"/>
+            <rect x="16" y="50" width="88" height="2" rx="1" fill="#00C9B1"/>
+            <text x="22" y="65" font-family="Inter" font-size="7" fill="#94A3B8">Portfolio</text>
+            <text x="22" y="76" font-family="Inter" font-size="10" font-weight="900" fill="white">$24,831</text>
+            <polyline points="70,80 80,74 88,76 96,70 104,65" stroke="#00C9B1" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <rect x="16" y="94" width="40" height="30" rx="6" fill="#111827"/>
+            <text x="22" y="108" font-family="Inter" font-size="6" fill="#94A3B8">EUR/USD</text>
+            <text x="22" y="118" font-family="Inter" font-size="8" font-weight="700" fill="#00C9B1">+0.03%</text>
+            <rect x="64" y="94" width="40" height="30" rx="6" fill="#111827"/>
+            <text x="70" y="108" font-family="Inter" font-size="6" fill="#94A3B8">BTC/USD</text>
+            <text x="70" y="118" font-family="Inter" font-size="8" font-weight="700" fill="#EF4444">-0.12%</text>
+            <rect x="16" y="132" width="88" height="60" rx="8" fill="#0D1525"/>
+            <polyline points="20,182 32,170 44,173 56,165 68,158 80,152 92,148 100,144" stroke="#00C9B1" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <polygon points="20,182 32,170 44,173 56,165 68,158 80,152 92,148 100,144 100,190 20,190" fill="url(#chartFill)"/>
+            <rect x="8" y="204" width="104" height="20" rx="0" fill="#0A1020"/>
+            <text x="20" y="218" font-size="9">📊</text>
+            <text x="42" y="218" font-size="9">💹</text>
+            <circle cx="64" cy="214" r="8" fill="#00C9B1"/>
+            <text x="61" y="218" font-size="8">⚡</text>
+            <text x="80" y="218" font-size="9">📰</text>
+            <text x="100" y="218" font-size="9">👤</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="pf-card reveal reveal-delay-1">
+        <div class="pf-icon-wrap" style="background:rgba(30,107,255,.12)">🖥️</div>
+        <div class="pf-name">MetaTrader 4</div>
+        <p class="pf-desc">The industry gold standard. Advanced charting, 100+ indicators, automated expert advisors, and unparalleled stability.</p>
+        <div class="pf-badge-row">
+          <span class="pf-badge">Windows</span><span class="pf-badge">Mac</span><span class="pf-badge">EA Support</span>
+        </div>
+        <a href="#register" class="btn btn-ghost btn-sm" style="margin-top:auto;width:fit-content">Download MT4</a>
+      </div>
+
+      <div class="pf-card reveal reveal-delay-2">
+        <div class="pf-icon-wrap" style="background:rgba(245,166,35,.10)">💻</div>
+        <div class="pf-name">MetaTrader 5</div>
+        <p class="pf-desc">Next-generation platform with multi-asset trading, depth of market, economic calendar, and built-in strategy tester.</p>
+        <div class="pf-badge-row">
+          <span class="pf-badge">Windows</span><span class="pf-badge">Mac</span><span class="pf-badge">Multi-Asset</span>
+        </div>
+        <a href="#register" class="btn btn-ghost btn-sm" style="margin-top:auto;width:fit-content">Download MT5</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ MARKETS ══════════════════ -->
+<section class="section markets-section" id="trading">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">Live Markets</div>
+      <h2 class="heading-lg">120+ instruments<br>at your fingertips</h2>
+    </div>
+    <div class="market-tabs reveal">
+      <button class="mtab on" onclick="switchMkt(this,'forex')">Forex</button>
+      <button class="mtab" onclick="switchMkt(this,'crypto')">Crypto</button>
+      <button class="mtab" onclick="switchMkt(this,'metals')">Metals</button>
+      <button class="mtab" onclick="switchMkt(this,'indices')">Indices</button>
+    </div>
+    <div class="mkt-table reveal" id="mktTable"></div>
+  </div>
+</section>
+
+<!-- ══════════════════ FEATURES BENTO ══════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="tag">Why Traze</div>
+      <h2 class="heading-lg">Built for serious traders</h2>
+      <p class="section-desc">Every feature designed to give you the edge in today's fast-moving markets.</p>
+    </div>
+    <div class="bento">
+      <div class="bento-card wide reveal">
+        <div class="bento-ico" style="background:rgba(0,201,177,.12)">⚡</div>
+        <h3>Sub-millisecond execution</h3>
+        <p>Our global server network processes orders in under 1ms. No requotes, no slippage surprises — just instant fills at your requested price.</p>
+        <div class="mini-bars">
+          <div class="bar" style="height:30%;opacity:.5"></div>
+          <div class="bar" style="height:55%"></div>
+          <div class="bar" style="height:40%;opacity:.7"></div>
+          <div class="bar" style="height:75%"></div>
+          <div class="bar" style="height:60%;opacity:.8"></div>
+          <div class="bar" style="height:90%"></div>
+          <div class="bar" style="height:70%"></div>
+          <div class="bar" style="height:100%"></div>
+        </div>
+      </div>
+      <div class="bento-card reveal reveal-delay-1">
+        <div class="bento-ico" style="background:rgba(30,107,255,.12)">🔒</div>
+        <h3>FSA Regulated</h3>
+        <p>Fully licensed and regulated. Client funds held in segregated tier-1 bank accounts, fully protected.</p>
+      </div>
+      <div class="bento-card reveal reveal-delay-2">
+        <div class="bento-ico" style="background:rgba(245,166,35,.10)">📋</div>
+        <h3>Copy Trading</h3>
+        <p>Follow elite traders and mirror their positions automatically. Full transparency on historical performance.</p>
+      </div>
+      <div class="bento-card reveal reveal-delay-1">
+        <div class="bento-ico" style="background:rgba(239,68,68,.10)">📡</div>
+        <h3>Signal Center</h3>
+        <p>Real-time trade signals from professional analysts. Never miss an opportunity with push alerts.</p>
+      </div>
+      <div class="bento-card wide reveal reveal-delay-2">
+        <div class="bento-ico" style="background:rgba(0,201,177,.12)">🌍</div>
+        <h3>Global access, local support</h3>
+        <p>Serving traders in 100+ countries with multilingual 24/5 customer support, local payment methods, and country-specific account options. Wherever you trade from, Traze is with you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ ACCOUNTS ══════════════════ -->
+<section class="section" style="padding-top:0" id="accounts">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="tag">Account Types</div>
+      <h2 class="heading-lg">Your account, your rules</h2>
+      <p class="section-desc">Three account types built for every stage of your trading journey.</p>
+    </div>
+    <div class="accs-grid">
+      <div class="acc-card reveal">
+        <div>
+          <div style="font-size:28px;margin-bottom:12px">🪙</div>
+          <div class="acc-type">Cent</div>
+          <div class="acc-sub">Perfect for beginners</div>
+        </div>
+        <div class="acc-sep"></div>
+        <div class="acc-feats">
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Micro-lot trading (0.01)</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> No minimum deposit</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> MT4 & MT5 access</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Leverage up to 1:1000</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> 24/5 live support</div>
+        </div>
+        <a href="#register" class="btn btn-ghost" style="margin-top:8px;width:100%;justify-content:center">Open Cent Account</a>
+      </div>
+
+      <div class="acc-card featured reveal reveal-delay-1">
+        <div>
+          <div style="font-size:28px;margin-bottom:12px">📈</div>
+          <div class="acc-type grad-text">Standard</div>
+          <div class="acc-sub">For active traders</div>
+        </div>
+        <div class="acc-sep"></div>
+        <div class="acc-feats">
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Spreads from 0.8 pips</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Zero commission</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Leverage up to 1:2000</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> 120+ instruments</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Copy trading access</div>
+        </div>
+        <a href="#register" class="btn btn-primary" style="margin-top:8px;width:100%;justify-content:center">Open Standard Account</a>
+      </div>
+
+      <div class="acc-card reveal reveal-delay-2">
+        <div>
+          <div style="font-size:28px;margin-bottom:12px">⚙️</div>
+          <div class="acc-type">ECN</div>
+          <div class="acc-sub">For professionals</div>
+        </div>
+        <div class="acc-sep"></div>
+        <div class="acc-feats">
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Raw spreads from 0.0</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Direct market access</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Transparent commission</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Leverage up to 1:500</div>
+          <div class="acc-feat"><span class="acc-feat-ico">✓</span> Dedicated account manager</div>
+        </div>
+        <a href="#register" class="btn btn-ghost" style="margin-top:8px;width:100%;justify-content:center">Open ECN Account</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ REGISTRATION ══════════════════ -->
+<section class="reg-section" id="register" style="background:var(--c-bg2);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border)">
+  <div class="container">
+    <div class="reg-grid">
+      <div class="reg-left reveal">
+        <div class="tag">Get Started</div>
+        <h2 class="heading-lg">Open your account<br>in <span class="grad-text">3 minutes</span></h2>
+        <p class="section-desc" style="margin-top:12px">Join thousands of traders worldwide who trust Traze for transparent, regulated, and professional Forex &amp; CFD trading.</p>
+        <div class="reg-steps">
+          <div class="rstep">
+            <div class="rstep-num">1</div>
+            <div class="rstep-body">
+              <h4>Create your account</h4>
+              <p>Complete your profile online — no paperwork, no branch visits. Fully digital verification in minutes.</p>
+            </div>
+          </div>
+          <div class="rstep">
+            <div class="rstep-num">2</div>
+            <div class="rstep-body">
+              <h4>Fund your account</h4>
+              <p>Deposit via bank transfer, card, or e-wallet. Multiple currencies with instant processing.</p>
+            </div>
+          </div>
+          <div class="rstep">
+            <div class="rstep-num">3</div>
+            <div class="rstep-body">
+              <h4>Start trading</h4>
+              <p>Download MT4/MT5 or the Traze app and access 120+ global instruments from anywhere.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card reveal reveal-delay-2">
+        <div id="formBody">
+          <div class="form-card-title">Open a Live Account</div>
+          <div class="form-card-sub">Free · No minimum deposit · FSA Regulated</div>
+          <div class="fg-row">
+            <div class="fg"><label>First Name</label><input type="text" id="fFirst" placeholder="John"></div>
+            <div class="fg"><label>Last Name</label><input type="text" id="fLast" placeholder="Smith"></div>
+          </div>
+          <div class="fg"><label>Email Address</label><input type="email" id="fEmail" placeholder="john@example.com"></div>
+          <div class="fg"><label>Phone Number</label><input type="tel" id="fPhone" placeholder="+1 555 000 0000"></div>
+          <div class="fg-row">
+            <div class="fg">
+              <label>Country</label>
+              <select id="fCountry">
+                <option value="">Select country</option>
+                <option>United Kingdom</option><option>United States</option><option>Germany</option>
+                <option>France</option><option>UAE</option><option>Singapore</option>
+                <option>Australia</option><option>Canada</option><option>Japan</option><option>Other</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Account Type</label>
+              <select id="fType">
+                <option>Standard Account</option>
+                <option>Cent Account</option>
+                <option>ECN Account</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg"><label>Password</label><input type="password" id="fPass" placeholder="Create a strong password"></div>
+          <label class="tos">
+            <input type="checkbox" id="fTos">
+            <span>I agree to the <a href="#">Terms &amp; Conditions</a>, <a href="#">Privacy Policy</a> and confirm I have read the <a href="#">Risk Disclosure</a>.</span>
+          </label>
+          <button class="form-submit" onclick="handleReg()">Create My Account →</button>
+          <div class="form-lock">🔒 256-bit SSL · Your data is fully protected</div>
+        </div>
+        <div class="form-success" id="formSuccess">
+          <div class="success-circle">✓</div>
+          <h3>Account Created!</h3>
+          <p>Welcome to Traze! Check your email to verify your account, then download the app and start trading.</p>
+          <a href="#" class="btn btn-primary btn-lg">Go to MyTraze →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ TRUST STRIP ══════════════════ -->
+<div class="trust-strip" id="about">
+  <div class="trust-strip-inner">
+    <div class="trust-logo">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><path d="M9 1l2.2 6.3H18l-5.4 4 2 6.3L9 14l-5.6 3.6 2-6.3L0 7.3h6.8L9 1z"/></svg>
+      FSA Regulated
+    </div>
+    <div class="trust-logo">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="5" width="16" height="12" rx="2"/><path d="M5 5V3a4 4 0 0 1 8 0v2"/></svg>
+      Segregated Funds
+    </div>
+    <div class="trust-logo">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="8"/><polyline points="9,5 9,9 12,11"/></svg>
+      24/5 Live Support
+    </div>
+    <div class="trust-logo">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,14 7,9 10,12 16,4"/></svg>
+      1:2000 Leverage
+    </div>
+    <div class="trust-logo">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="8"/><line x1="9" y1="5" x2="9" y2="9"/><line x1="9" y1="12" x2="9" y2="13"/></svg>
+      Negative Balance Protection
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="gap:9px">
+          <div class="nav-logo-icon" style="width:30px;height:30px;border-radius:8px">
+            <svg viewBox="0 0 20 20" fill="none" style="width:15px;height:15px"><polyline points="2,14 7,9 11,13 18,5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="nav-logo-text" style="font-size:18px">Tra<span>ze</span></span>
+        </a>
+        <p>A trusted and regulated Forex & CFD broker offering transparent access to global financial markets for traders of every level.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Trading</h5>
+        <ul>
+          <li><a href="#">Forex</a></li>
+          <li><a href="#">Indices</a></li>
+          <li><a href="#">Shares</a></li>
+          <li><a href="#">Commodities</a></li>
+          <li><a href="#">Cryptocurrency</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Platforms</h5>
+        <ul>
+          <li><a href="#">MT4 for Windows</a></li>
+          <li><a href="#">MT4 for Mac</a></li>
+          <li><a href="#">MT5 for Windows</a></li>
+          <li><a href="#">MT5 for Mac</a></li>
+          <li><a href="#">Traze Mobile App</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About Traze</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Partnership</a></li>
+          <li><a href="#">Risk Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-disc">© 2025 Traze. All rights reserved. CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. 74% of retail investor accounts lose money when trading CFDs. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money. Traze is regulated by the Financial Services Authority (FSA).</p>
+      <div class="footer-copy">traze.com</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script>
+/* ─── TICKER ─── */
+const tickers=[
+  {s:'EUR/USD',v:'1.1605',c:'+0.03%',up:true},{s:'GBP/USD',v:'1.3434',c:'+0.10%',up:true},
+  {s:'USD/JPY',v:'159.155',c:'-0.02%',up:false},{s:'BTC/USD',v:'73,795',c:'+0.19%',up:true},
+  {s:'XAU/USD',v:'4,565',c:'+1.34%',up:true},{s:'ETH/USD',v:'2,022',c:'+0.74%',up:true},
+  {s:'XAG/USD',v:'75.54',c:'+0.05%',up:true},{s:'USD/CAD',v:'1.3842',c:'-0.05%',up:false},
+  {s:'AUD/USD',v:'0.6517',c:'+0.08%',up:true},{s:'NASDAQ',v:'19,832',c:'+0.43%',up:true},
+  {s:'S&P 500',v:'5,612',c:'+0.28%',up:true},{s:'TSLA',v:'435.61',c:'+1.82%',up:true},
+];
+function buildTicker(){
+  const rail=document.getElementById('tickerRail');
+  const all=[...tickers,...tickers];
+  rail.innerHTML=all.map(t=>`<div class="t-item">
+    <span class="t-sym">${t.s}</span>
+    <span class="t-val">${t.v}</span>
+    <span class="t-chg ${t.up?'up':'dn'}">${t.c}</span>
+  </div>`).join('');
+}
+buildTicker();
+
+/* Price drift animation */
+setInterval(()=>{
+  document.querySelectorAll('.t-val').forEach((el,i)=>{
+    const raw=tickers[i%tickers.length].v.replace(/,/g,'');
+    const n=parseFloat(raw);
+    if(!isNaN(n)){
+      const d=n*(Math.random()*.0006-.0003);
+      const dec=raw.includes('.')?raw.split('.')[1].length:0;
+      el.textContent=(n+d).toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+    }
+  });
+  // update floating card price
+  const base=1.1604+(Math.random()-.5)*.003;
+  const el=document.getElementById('fc-price');
+  if(el) el.textContent=base.toFixed(4);
+},2000);
+
+/* ─── HERO SLIDES ─── */
+const heroSlides=[
+  {pill:'FSA Regulated Broker',h1:'Crystal Clear<br>',grad:'Trading.',lead:'Trade Forex, CFDs, Crypto & more on MT4/MT5. Leverage up to 1:2000 with sub-millisecond execution.'},
+  {pill:'Zero Commission',h1:'Trade Smarter,<br>',grad:'Earn More.',lead:'120+ instruments. Spreads from 0.8 pips. No hidden fees. Full transparency — every trade, every time.'},
+  {pill:'Global Markets 24/5',h1:'Your Markets,<br>',grad:'Your Terms.',lead:'From New York to Tokyo — access the world\'s most liquid markets around the clock from any device.'},
+];
+let curSlide=0;
+function goSlide(idx){
+  document.querySelectorAll('.h-slide').forEach((s,i)=>s.classList.toggle('on',i===idx));
+  document.querySelectorAll('.h-dot').forEach((d,i)=>d.classList.toggle('on',i===idx));
+  const s=heroSlides[idx];
+  document.getElementById('pill-txt').textContent=s.pill;
+  document.getElementById('hero-h1').innerHTML=s.h1+'<span class="grad-text" id="hero-grad">'+s.grad+'</span>';
+  document.getElementById('hero-lead').textContent=s.lead;
+  curSlide=idx;
+}
+setInterval(()=>goSlide((curSlide+1)%heroSlides.length),5500);
+
+/* ─── HAMBURGER ─── */
+const hamburger=document.getElementById('hamburger');
+const mobileNav=document.getElementById('mobileNav');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+// Close nav on link click
+mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  hamburger.classList.remove('open');
+  mobileNav.classList.remove('open');
+}));
+
+/* ─── MARKETS TABLE ─── */
+const mkts={
+  forex:[
+    {s:'EUR/USD',n:'Euro / US Dollar',    col:'#3B82F6',lbl:'EU', p:'1.1605', sp:'0.8',  c:'+0.03%',up:true},
+    {s:'GBP/USD',n:'British Pound',       col:'#8B5CF6',lbl:'GB', p:'1.3434', sp:'1.0',  c:'+0.10%',up:true},
+    {s:'USD/JPY',n:'Dollar / Yen',         col:'#EF4444',lbl:'JP', p:'159.15', sp:'0.9',  c:'-0.02%',up:false},
+    {s:'AUD/USD',n:'Australian Dollar',    col:'#F59E0B',lbl:'AU', p:'0.6517', sp:'1.2',  c:'+0.08%',up:true},
+    {s:'USD/CAD',n:'Dollar / Canadian',    col:'#EC4899',lbl:'CA', p:'1.3842', sp:'1.1',  c:'-0.05%',up:false},
+  ],
+  crypto:[
+    {s:'BTC/USD',n:'Bitcoin',    col:'#F7931A',lbl:'₿',  p:'73,795', sp:'15',  c:'+0.19%',up:true},
+    {s:'ETH/USD',n:'Ethereum',   col:'#627EEA',lbl:'Ξ',  p:'2,022',  sp:'2.5', c:'+0.74%',up:true},
+    {s:'LTC/USD',n:'Litecoin',   col:'#A0AEC0',lbl:'Ł',  p:'52.35',  sp:'0.5', c:'+0.48%',up:true},
+    {s:'XRP/USD',n:'Ripple',     col:'#00AAE4',lbl:'XR', p:'0.5180', sp:'0.01',c:'-0.12%',up:false},
+  ],
+  metals:[
+    {s:'XAU/USD',n:'Gold',     col:'#F5A623',lbl:'Au', p:'4,565',  sp:'0.35',c:'+1.34%',up:true},
+    {s:'XAG/USD',n:'Silver',   col:'#CBD5E0',lbl:'Ag', p:'75.545', sp:'0.04',c:'+0.05%',up:true},
+    {s:'XPT/USD',n:'Platinum', col:'#E2E8F0',lbl:'Pt', p:'1,913',  sp:'0.8', c:'+0.11%',up:true},
+  ],
+  indices:[
+    {s:'NASDAQ',n:'Nasdaq 100',   col:'#3B82F6',lbl:'NQ', p:'19,832', sp:'0.5',c:'+0.43%',up:true},
+    {s:'SP500', n:'S&P 500',      col:'#10B981',lbl:'SP', p:'5,612',  sp:'0.4',c:'+0.28%',up:true},
+    {s:'DAX',   n:'Germany DAX',  col:'#F59E0B',lbl:'DA', p:'22,548', sp:'0.6',c:'-0.15%',up:false},
+  ],
+};
+
+function spark(up){
+  const pts=[];let v=50;
+  for(let i=0;i<20;i++){v=Math.max(5,Math.min(95,v+(Math.random()-0.45)*14*(up?1:-1)));pts.push(v)}
+  const col=up?'#00C9B1':'#EF4444';
+  const path='M'+pts.map((v,i)=>`${i*4},${100-v}`).join('L');
+  const fill='M0,100L'+pts.map((v,i)=>`${i*4},${100-v}`).join('L')+`L${(pts.length-1)*4},100Z`;
+  return`<svg class="spark" viewBox="0 0 76 100" preserveAspectRatio="none">
+    <path d="${fill}" fill="${col}" fill-opacity="0.18"/>
+    <path d="${path}" stroke="${col}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </svg>`;
+}
+function renderMkt(key){
+  const rows=mkts[key];
+  document.getElementById('mktTable').innerHTML=`
+  <div class="mkt-row hdr"><div>Instrument</div><div>Price</div><div>Spread</div><div>7D</div><div>Change</div></div>
+  ${rows.map(r=>`<div class="mkt-row">
+    <div class="mkt-name">
+      <div class="mkt-dot" style="background:${r.col}22;color:${r.col};font-size:11px;font-family:monospace">${r.lbl}</div>
+      <div><div class="mkt-sym">${r.s}</div><div class="mkt-full">${r.n}</div></div>
+    </div>
+    <div class="mkt-price">$${r.p}</div>
+    <div class="mkt-spread">${r.sp} pips</div>
+    ${spark(r.up)}
+    <div><span class="mkt-chg ${r.up?'up':'dn'}">${r.up?'▲':'▼'} ${r.c}</span></div>
+  </div>`).join('')}`;
+}
+function switchMkt(btn,key){
+  document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderMkt(key);
+}
+renderMkt('forex');
+
+/* ─── REGISTRATION ─── */
+function handleReg(){
+  const first=document.getElementById('fFirst').value.trim();
+  const last=document.getElementById('fLast').value.trim();
+  const email=document.getElementById('fEmail').value.trim();
+  const tos=document.getElementById('fTos').checked;
+  if(!first||!last||!email){alert('Please fill in all required fields.');return}
+  if(!/\S+@\S+\.\S+/.test(email)){alert('Please enter a valid email address.');return}
+  if(!tos){alert('Please agree to the Terms & Conditions and Risk Disclosure.');return}
+  document.getElementById('formBody').style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+}
+
+/* ─── SCROLL REVEAL ─── */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('up')});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
